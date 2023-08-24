@@ -1,0 +1,48 @@
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+public class ToDoListTest {
+    private ToDoList todoList;
+
+    @Before
+    public void setUp() {
+        todoList = new ToDoList();
+    }
+
+    @After
+    public void tearDown() {
+        todoList = null;
+    }
+
+    @Test
+    public void testAddTask() {
+        todoList.addTask("Buy groceries");
+        Assert.assertEquals(1, todoList.getTasks().size());
+    }
+
+    @Test
+    public void testRemoveTask() {
+        todoList.addTask("Buy groceries");
+        todoList.addTask("Clean the house");
+        todoList.removeTask("Buy groceries");
+        Assert.assertEquals(1, todoList.getTasks().size());
+    }
+
+    @Test
+    public void testDisplayTasks() {
+        todoList.addTask("Buy groceries");
+        todoList.addTask("Clean the house");
+        
+        String expectedOutput = "Current Tasks:\n1. Buy groceries\n2. Clean the house";
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+        
+        todoList.displayTasks();
+        
+        Assert.assertEquals(expectedOutput, outputStream.toString().trim());
+    }
+}
